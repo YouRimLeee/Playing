@@ -40,6 +40,16 @@ protected:
 // 생성된 메시지 맵 함수
 protected:
 	DECLARE_MESSAGE_MAP()
+public:
+	afx_msg void OnPlayingButterfly();
+	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
+	afx_msg void OnSize(UINT nType, int cx, int cy);
+	CPoint m_pt;
+	int m_xStep;
+	int m_yStep;
+	int m_WinRight;
+	int m_WinBottom;
 };
 
 #ifndef _DEBUG  // FinalProjectView.cpp의 디버그 버전
