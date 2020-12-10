@@ -212,6 +212,7 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\bitmap1.bmp" />
+    <Image Include="res\child.bmp" />
     <Image Include="res\FinalProject.ico" />
     <Image Include="res\FinalProjectDoc.ico" />
     <Image Include="res\forest.bmp" />

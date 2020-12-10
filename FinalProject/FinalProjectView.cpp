@@ -31,6 +31,7 @@ BEGIN_MESSAGE_MAP(CFinalProjectView, CView)
 	ON_WM_LBUTTONDOWN()
 	ON_WM_TIMER()
 	ON_WM_SIZE()
+	ON_COMMAND(ID_PLAYING_CHILD, &CFinalProjectView::OnPlayingChild)
 END_MESSAGE_MAP()
 
 // CFinalProjectView 생성/소멸
@@ -38,7 +39,7 @@ END_MESSAGE_MAP()
 CFinalProjectView::CFinalProjectView() noexcept
 {
 	// TODO: 여기에 생성 코드를 추가합니다.
-
+	m_kind = 0;
 }
 
 CFinalProjectView::~CFinalProjectView()
@@ -61,16 +62,39 @@ void CFinalProjectView::OnDraw(CDC* pDC)
 	ASSERT_VALID(pDoc);
 	if (!pDoc)
 		return;
-	CBitmap forest;
-	forest.LoadBitmapW(IDB_BIT_FOREST);
-	CDC mdc;
-	mdc.CreateCompatibleDC(pDC);
-	//배경 숲
-	mdc.SelectObject(forest);
-	pDC->BitBlt(0, 0, 1200, 700, &mdc, 0, 0, SRCCOPY);
-	CImage butterfly;
-	butterfly.Load(L"res/butterfly.png");
-	butterfly.Draw(*pDC, m_pt.x - 50, m_pt.y - 50);
+	if (m_kind == 1) {
+		CBitmap forest;
+		forest.LoadBitmapW(IDB_BIT_FOREST);
+		CDC mdc;
+		mdc.CreateCompatibleDC(pDC);
+		//배경 숲
+		mdc.SelectObject(forest);
+		pDC->BitBlt(0, 0, 1200, 700, &mdc, 0, 0, SRCCOPY);
+		CImage butterfly;
+		butterfly.Load(L"res/butterfly.png");
+		butterfly.Draw(*pDC, m_pt.x - 50, m_pt.y - 50);
+	}
+	else if (m_kind == 2) {
+		CBitmap forest;
+		forest.LoadBitmapW(IDB_BIT_FOREST);
+		CDC mdc;
+		mdc.CreateCompatibleDC(pDC);
+		//배경 숲
+		mdc.SelectObject(forest);
+		pDC->BitBlt(0, 0, 1200, 700, &mdc, 0, 0, SRCCOPY);
+		
+		/*CImage child;
+		child.Load(L"res/child.png");
+		child.Draw(*pDC, m_Child.x, m_Child.y, 100, 200);*/
+		CBitmap boy, *oldbit;
+		boy.LoadBitmapW(IDB_BIT_CHILD);
+		CDC memdc;
+		memdc.CreateCompatibleDC(pDC);
+		memdc.SelectObject(&boy);
+		oldbit = memdc.SelectObject(&boy);
+		pDC->BitBlt(m_Child.x, m_Child.y, 100, 200, &memdc, m_count*100, 0, SRCCOPY);
+		memdc.SelectObject(oldbit);
+	}
 	// TODO: 여기에 원시 데이터에 대한 그리기 코드를 추가합니다.
 }
 
@@ -118,41 +142,54 @@ CFinalProjectDoc* CFinalProjectView::GetDocument() const // 디버그되지 않�
 // CFinalProjectView 메시지 처리기
 
 
-void CFinalProjectView::OnPlayingButterfly()
-{
-	// TODO: 여기에 명령 처리기 코드를 추가합니다.
-}
 
 
 void CFinalProjectView::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
-	SetTimer(1, 100, NULL); 
-	m_xStep = (int)(point.x - m_pt.x) / 10;
-	m_yStep = (int)(point.y - m_pt.y) / 10;
-
+	if (m_kind == 1) {
+		SetTimer(1, 100, NULL);
+		m_xStep = (int)(point.x - m_pt.x) / 10;
+		m_yStep = (int)(point.y - m_pt.y) / 10;
+	}
+	else if (m_kind == 2) {
+		m_count = 0;
+		SetTimer(1, 100, NULL);
+	}	
 	CView::OnLButtonDown(nFlags, point);
+	
 }
 
 
 void CFinalProjectView::OnTimer(UINT_PTR nIDEvent)
 {
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
-	m_pt.x = m_pt.x + m_xStep;
-	m_pt.y = m_pt.y + m_yStep;
-	if ((m_pt.x - 50) < 0 || (m_pt.x + 50) > m_WinRight) //왼쪽벽 또는 오른쪽벽
-	{
-		m_pt.x = (m_xStep < 0) ? 50 : (m_WinRight - 50);//m_pt.x - m_xStep;
-		m_pt.y = m_pt.y - m_yStep;
-		m_xStep = m_xStep * -1;
+	if (m_kind == 1) {
+		m_pt.x = m_pt.x + m_xStep;
+		m_pt.y = m_pt.y + m_yStep;
+		if ((m_pt.x - 50) < 0 || (m_pt.x + 50) > m_WinRight) //왼쪽벽 또는 오른쪽벽
+		{
+			m_pt.x = (m_xStep < 0) ? 50 : (m_WinRight - 50);//m_pt.x - m_xStep;
+			m_pt.y = m_pt.y - m_yStep;
+			m_xStep = m_xStep * -1;
+		}
+		if ((m_pt.y - 50) < 0 || (m_pt.y + 50) > m_WinBottom) // 윗쪽 벽 또는 아랫쪽 벽
+		{
+			m_pt.x = m_pt.x - m_xStep;
+			m_pt.y = (m_yStep < 0) ? 50 : (m_WinBottom - 50);//m_pt.y - m_yStep;
+			m_yStep = m_yStep * -1;
+		}
+		Invalidate();
 	}
-	if ((m_pt.y - 50) < 0 || (m_pt.y + 50) > m_WinBottom) // 윗쪽 벽 또는 아랫쪽 벽
-	{
-		m_pt.x = m_pt.x - m_xStep;
-		m_pt.y = (m_yStep < 0) ? 50 : (m_WinBottom - 50);//m_pt.y - m_yStep;
-		m_yStep = m_yStep * -1;
+	else if (m_kind == 2) {
+		m_count++;
+		if (m_count == 6)
+			m_count = 0;
+		m_Child.x += 20;
+		if (m_Child.x >= m_WinBottom)
+			m_Child.x = -600;
+		Invalidate();
 	}
-	Invalidate();
 
 	CView::OnTimer(nIDEvent);
 }
@@ -164,4 +201,16 @@ void CFinalProjectView::OnSize(UINT nType, int cx, int cy)
 	m_WinRight = cx;
 	m_WinBottom = cy;
 	// TODO: 여기에 메시지 처리기 코드를 추가합니다.
+}
+
+void CFinalProjectView::OnPlayingButterfly()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	m_kind = 1;
+}
+
+void CFinalProjectView::OnPlayingChild()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	m_kind = 2;
 }

@@ -50,6 +50,10 @@ public:
 	int m_yStep;
 	int m_WinRight;
 	int m_WinBottom;
+	afx_msg void OnPlayingChild();
+	int m_kind;
+	int m_count;
+	CPoint m_Child;
 };
 
 #ifndef _DEBUG  // FinalProjectView.cpp의 디버그 버전

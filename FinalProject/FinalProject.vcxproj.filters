@@ -83,5 +83,8 @@
     <Image Include="res\forest.bmp">
       <Filter>리소스 파일</Filter>
     </Image>
+    <Image Include="res\child.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
   </ItemGroup>
 </Project>

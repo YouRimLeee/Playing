@@ -8,6 +8,8 @@
 #define IDR_FinalProjectTYPE            130
 #define IDB_BITMAP1                     310
 #define IDB_BIT_FOREST                  311
+#define IDB_BITMAP2                     312
+#define IDB_BIT_CHILD                   312
 #define ID_PLAYING_PARK                 32771
 #define ID_PARK_BUTTERFLY               32772
 #define ID_PARK_CHILD                   32773
@@ -28,7 +30,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        312
+#define _APS_NEXT_RESOURCE_VALUE        313
 #define _APS_NEXT_COMMAND_VALUE         32786
 #define _APS_NEXT_CONTROL_VALUE         1000
 #define _APS_NEXT_SYMED_VALUE           310
