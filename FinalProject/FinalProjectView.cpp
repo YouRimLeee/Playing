@@ -83,17 +83,22 @@ void CFinalProjectView::OnDraw(CDC* pDC)
 		mdc.SelectObject(forest);
 		pDC->BitBlt(0, 0, 1200, 700, &mdc, 0, 0, SRCCOPY);
 		
-		/*CImage child;
-		child.Load(L"res/child.png");
-		child.Draw(*pDC, m_Child.x, m_Child.y, 100, 200);*/
-		CBitmap boy, *oldbit;
+		CString filename;
+		CImage child;
+		filename.Format(L"res/child - %d.png", m_count);
+		child.Load(filename);
+		child.Draw(*pDC, 100, 200);
+		m_count = m_count + 1;
+		if (m_count == 7)
+			m_count = 1;
+		/*CBitmap boy, *oldbit;
 		boy.LoadBitmapW(IDB_BIT_CHILD);
 		CDC memdc;
 		memdc.CreateCompatibleDC(pDC);
 		memdc.SelectObject(&boy);
 		oldbit = memdc.SelectObject(&boy);
 		pDC->BitBlt(m_Child.x, m_Child.y, 100, 200, &memdc, m_count*100, 0, SRCCOPY);
-		memdc.SelectObject(oldbit);
+		memdc.SelectObject(oldbit);*/
 	}
 	// TODO: 여기에 원시 데이터에 대한 그리기 코드를 추가합니다.
 }
