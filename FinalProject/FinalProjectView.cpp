@@ -17,6 +17,7 @@
 #define new DEBUG_NEW
 #endif
 
+#define UNKNOWN 0
 #define Butterfly 1
 #define Child 2
 #define Stay 3
@@ -45,7 +46,7 @@ END_MESSAGE_MAP()
 CFinalProjectView::CFinalProjectView() noexcept
 {
 	// TODO: 여기에 생성 코드를 추가합니다.
-	m_kind = 0;
+	m_kind = UNKNOWN;
 	count = 0;
 }
 
@@ -84,7 +85,7 @@ void CFinalProjectView::OnDraw(CDC* pDC)
 		//배경 숲
 		CRect message(200, 200, 600, 600);
 		pDC->DrawText(L"마우스를 한번 누르면 \n 나비가 날아다닙니다^^", &message, DT_CENTER | DT_VCENTER);
-		mdc.SelectObject(forest);
+		mdc.SelectObject(&forest);
 		pDC->BitBlt(400, 400, 1200, 700, &mdc, 0, 0, SRCCOPY);
 		CImage butterfly;
 		butterfly.Load(L"res/butterfly.png");
@@ -306,11 +307,12 @@ void CFinalProjectView::OnPlayingStay()
 }
 
 
+/* 처음에 만들 때의 구상과 조금 달라져서 이미 만든 이벤트 처리함수를 지우는 방법을 몰라서 주석처리로 숨김.
 void CFinalProjectView::OnPlayingMove()
 {
 	// TODO: 여기에 명령 처리기 코드를 추가합니다.
 	m_kind = 4;
-}
+}*/
 
 
 
