@@ -54,6 +54,11 @@ public:
 	int m_kind;
 	int m_count;
 	CPoint m_Child;
+	afx_msg void OnPlayingMove();
+	afx_msg void OnPlayingStay();
+	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
+	int count;
+	
 };
 
 #ifndef _DEBUG  // FinalProjectView.cpp의 디버그 버전

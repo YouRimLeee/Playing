@@ -8,7 +8,6 @@
 #define IDR_FinalProjectTYPE            130
 #define IDB_BITMAP1                     310
 #define IDB_BIT_FOREST                  311
-#define IDB_BITMAP2                     312
 #define IDB_BIT_CHILD                   312
 #define ID_PLAYING_PARK                 32771
 #define ID_PARK_BUTTERFLY               32772
